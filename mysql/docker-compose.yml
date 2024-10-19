@@ -1,0 +1,18 @@
+services:
+  mysqldb:
+    image: mysql:8.2
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
