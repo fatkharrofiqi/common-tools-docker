@@ -1,2 +1,5 @@
 traefik/certs
 mysql/data
+localstack/localstack
+timescaledb/timescale-data
+postgresql/data

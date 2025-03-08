@@ -1,0 +1,23 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"  # LocalStack Gateway
+      - "4571:4571"  # Lambda API (Legacy)
+    environment:
+      - SERVICES=s3,sqs  # Define AWS services to enable
+      - LOCALSTACK_RUNTIME=python
+      - DEBUG=1  # Enable debugging logs
+      - AWS_ACCESS_KEY_ID=test  # Dummy AWS credentials
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Allow LocalStack to create resources
+      - "./localstack:/var/lib/localstack"  # Persist LocalStack data
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

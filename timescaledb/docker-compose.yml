@@ -1,0 +1,23 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb-ha:pg17
+    container_name: timescaledb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "password"
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./timescale-data:/var/lib/postgresql/data  # Bind volume for TimescaleDB data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.timescaledb.rule=Host(`timescaledb.dev.local`)
+      - traefik.http.routers.timescaledb.entrypoints=https
+      - traefik.http.routers.timescaledb.tls=true
+      - traefik.http.services.timescaledb.loadbalancer.server.port=5432
+
+networks:
+  proxy:
+    external: true
