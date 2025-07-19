@@ -3,3 +3,4 @@ mysql/data
 localstack/localstack
 timescaledb/timescale-data
 postgresql/data
+nominatim/osm_data
